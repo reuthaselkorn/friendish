@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import royreut.apps.friendish.R
@@ -37,6 +39,11 @@ class DishesFragment : Fragment() {
         adapter.listener = object : DishesRecyclerViewActivity.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 Log.i("TAG", "position: $position")
+                val dish = dishes?.get(position)
+                dish?.let {
+                    val action = DishesFragmentDirections.actionDishesFragmentToBlueFragment(it.name)
+                    Navigation.findNavController(view).navigate(action)
+                }
             }
 
             override fun onDishClick(dish: Dish?) {
@@ -45,6 +52,11 @@ class DishesFragment : Fragment() {
         }
 
         dishesRecyclerView?.adapter = adapter
+
+        val addDishButton:ImageButton = view.findViewById(R.id.addDishFloatingButton)
+        val action = Navigation.createNavigateOnClickListener(DishesFragmentDirections.actionGlobalAddDishFragment())
+
+        addDishButton.setOnClickListener(action)
 
         return view
     }

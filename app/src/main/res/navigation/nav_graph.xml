@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dishesFragment">
+
+    <fragment
+        android:id="@+id/dishesFragment"
+        android:name="royreut.apps.friendish.modules.dishes.DishesFragment"
+        android:label="Dishes List"
+        tools:layout="@layout/fragment_dishes">
+        <action
+            android:id="@+id/action_dishesFragment_to_blueFragment"
+            app:destination="@id/blueFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blueFragment"
+        android:name="royreut.apps.friendish.BlueFragment"
+        android:label="fragment_blue"
+        tools:layout="@layout/fragment_blue" >
+        <argument
+            android:name="TITLE"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDishFragment"
+        android:name="royreut.apps.friendish.modules.addDish.AddDishFragment"
+        android:label="Add Dish"
+        tools:layout="@layout/fragment_add_dish" />
+    <action android:id="@+id/action_global_addDishFragment" app:destination="@id/addDishFragment" />
+</navigation>

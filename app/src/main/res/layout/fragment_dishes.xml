@@ -11,7 +11,14 @@
         android:layout_width="409dp"
         android:layout_height="729dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/addDishFloatingButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@android:drawable/ic_input_add"
+        tools:layout_editor_absoluteX="375dp"
+        tools:layout_editor_absoluteY="695dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

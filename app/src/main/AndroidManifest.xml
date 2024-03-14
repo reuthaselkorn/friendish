@@ -17,9 +17,6 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".modules.addDish.AddDishActivity"
-            android:exported="false" />
-        <activity
             android:name=".modules.dishes.DishesListActivity"
             android:exported="false" />
         <activity

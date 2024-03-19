@@ -11,6 +11,8 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import royreut.apps.friendish.R
+import royreut.apps.friendish.models.Dish
+import royreut.apps.friendish.models.Model
 
 class AddDishFragment : Fragment() {
 
@@ -42,12 +44,14 @@ class AddDishFragment : Fragment() {
 
         cancelButton?.setOnClickListener { Navigation.findNavController(it).popBackStack(R.id.dishesFragment, false) }
             saveButton?.setOnClickListener {
-                // todo: change ShowcaseUserActivity to activity which adds dishes
-//            val myIntent = Intent(this, ShowcaseUserActivity::class.java)
-//
-//            myIntent.putExtra("name", dishNameTextField?.text.toString());
-//            myIntent.putExtra("email", recipeTextField?.text.toString());
+                val name = dishNameTextField?.text.toString()
+                val recipe = recipeTextField?.text.toString()
 
+                val dish = Dish(name, recipe, false)
+
+                Model.instance.addDish(dish) {
+                    Navigation.findNavController(it).popBackStack(R.id.dishesFragment, false)
+                }
             }
         }
 

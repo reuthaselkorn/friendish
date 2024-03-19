@@ -17,19 +17,19 @@ import royreut.apps.friendish.models.Model
 class DishesListActivity : AppCompatActivity() {
 
     var dishesListView:ListView? = null
-    var dishes:MutableList<Dish>? = null
+    var dishes:List<Dish>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dishes_list)
 
-        dishes = Model.instance.dishes
+        Model.instance.getAllDishes { dishes -> this.dishes = dishes }
 
         dishesListView = findViewById(R.id.lvDishesList)
         dishesListView?.adapter = DishListAdapter(dishes)
     }
 
-    class DishListAdapter(private val dishes:MutableList<Dish>?): BaseAdapter() {
+    class DishListAdapter(private val dishes:List<Dish>?): BaseAdapter() {
 
         override fun getCount(): Int = dishes?.size ?: 0
 

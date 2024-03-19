@@ -10,7 +10,7 @@ import royreut.apps.friendish.R
 import royreut.apps.friendish.models.Dish
 import royreut.apps.friendish.modules.dishes.DishesRecyclerViewActivity
 
-class DishesViewHolder(val itemView: View, val listener:DishesRecyclerViewActivity.OnItemClickListener?, var dishes:MutableList<Dish>?): RecyclerView.ViewHolder(itemView) {
+class DishesViewHolder(val itemView: View, val listener:DishesRecyclerViewActivity.OnItemClickListener?, var dishes:List<Dish>?): RecyclerView.ViewHolder(itemView) {
 
     fun bind(dish: Dish?) {
         this.dish = dish

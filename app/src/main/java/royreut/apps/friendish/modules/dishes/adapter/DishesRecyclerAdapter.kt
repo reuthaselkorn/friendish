@@ -7,7 +7,7 @@ import royreut.apps.friendish.R
 import royreut.apps.friendish.models.Dish
 import royreut.apps.friendish.modules.dishes.DishesRecyclerViewActivity
 
-class DishesRecyclerAdapter(var dishes:MutableList<Dish>?): RecyclerView.Adapter<DishesViewHolder>() {
+class DishesRecyclerAdapter(var dishes:List<Dish>?): RecyclerView.Adapter<DishesViewHolder>() {
 
     var listener: DishesRecyclerViewActivity.OnItemClickListener? = null
 

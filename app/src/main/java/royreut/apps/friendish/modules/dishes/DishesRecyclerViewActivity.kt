@@ -22,4 +22,8 @@ class DishesRecyclerViewActivity : AppCompatActivity() {
         fun onItemClick(position:Int)
         fun onDishClick(dish:Dish?)
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
 }

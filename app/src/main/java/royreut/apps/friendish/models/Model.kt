@@ -1,17 +1,41 @@
 package royreut.apps.friendish.models
 
+import android.os.Looper
+import androidx.core.os.HandlerCompat
+import royreut.apps.friendish.dao.AppLocalDataBase
+import java.util.concurrent.Executors
+
 class Model private constructor() {
 
-    val dishes: MutableList<Dish> = ArrayList()
+    private val database = AppLocalDataBase.db
+    private var executor = Executors.newSingleThreadExecutor()
+    private var mainHandler = HandlerCompat.createAsync(Looper.getMainLooper())
 
     companion object {
         val instance: Model = Model()
     }
 
-    init {
-        for (i in 0..20) {
-            val dish = Dish("dish$i","recipe$i", false)
-            dishes.add(dish)
+    interface getAllDishesListener {
+        fun onComplete(dishes:List<Dish>)
+    }
+
+    fun getAllDishes(callback: (List<Dish>) -> Unit){
+        executor.execute {
+
+            Thread.sleep(5000)
+            val dishes = database.dishDao().getAll()
+
+            mainHandler.post{
+                // Main Thread
+                callback(dishes)
+            }
+        }
+    }
+
+    fun addDish(dish: Dish, callback: () -> Unit) {
+        executor.execute {
+            database.dishDao().insert(dish)
+            mainHandler.post(callback)
         }
     }
 }

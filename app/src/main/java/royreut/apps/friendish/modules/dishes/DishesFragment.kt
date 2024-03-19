@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,8 @@ import royreut.apps.friendish.modules.dishes.adapter.DishesRecyclerAdapter
 class DishesFragment : Fragment() {
 
     var dishesRecyclerView : RecyclerView? = null
-    var dishes:MutableList<Dish>? = null
+    var dishes:List<Dish>? = null
+    var progressBar:ProgressBar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +29,15 @@ class DishesFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dishes, container, false)
 
-        dishes = Model.instance.dishes
+        progressBar = view.findViewById(R.id.progressBar)
+        progressBar?.visibility = View.VISIBLE
+        val adapter = DishesRecyclerAdapter(dishes)
+        Model.instance.getAllDishes { dishes ->
+            this.dishes = dishes
+            adapter.dishes = dishes
+            adapter?.notifyDataSetChanged()
+            progressBar?.visibility = View.GONE
+        }
 
         dishesRecyclerView = view.findViewById(R.id.rvDishFragmentList)
         dishesRecyclerView?.setHasFixedSize(true)
@@ -35,11 +45,10 @@ class DishesFragment : Fragment() {
         // Set the layout manager
         dishesRecyclerView?.layoutManager = LinearLayoutManager(context)
 
-        val adapter = DishesRecyclerAdapter(dishes)
         adapter.listener = object : DishesRecyclerViewActivity.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 Log.i("TAG", "position: $position")
-                val dish = dishes?.get(position)
+                val dish = adapter.dishes?.get(position)
                 dish?.let {
                     val action = DishesFragmentDirections.actionDishesFragmentToBlueFragment(it.name)
                     Navigation.findNavController(view).navigate(action)

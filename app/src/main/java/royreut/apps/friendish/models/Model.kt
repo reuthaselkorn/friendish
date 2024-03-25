@@ -10,6 +10,7 @@ class Model private constructor() {
     private val database = AppLocalDataBase.db
     private var executor = Executors.newSingleThreadExecutor()
     private var mainHandler = HandlerCompat.createAsync(Looper.getMainLooper())
+    private val firebaseModel = FirebaseModel()
 
     companion object {
         val instance: Model = Model()
@@ -20,22 +21,24 @@ class Model private constructor() {
     }
 
     fun getAllDishes(callback: (List<Dish>) -> Unit){
-        executor.execute {
-
-            Thread.sleep(5000)
-            val dishes = database.dishDao().getAll()
-
-            mainHandler.post{
-                // Main Thread
-                callback(dishes)
-            }
-        }
+        firebaseModel.getAllDishes(callback)
+//        executor.execute {
+//
+//            Thread.sleep(5000)
+//            val dishes = database.dishDao().getAll()
+//
+//            mainHandler.post{
+//                // Main Thread
+//                callback(dishes)
+//            }
+//        }
     }
 
     fun addDish(dish: Dish, callback: () -> Unit) {
-        executor.execute {
-            database.dishDao().insert(dish)
-            mainHandler.post(callback)
-        }
+        firebaseModel.addDish(dish, callback)
+//        executor.execute {
+//            database.dishDao().insert(dish)
+//            mainHandler.post(callback)
+//        }
     }
 }

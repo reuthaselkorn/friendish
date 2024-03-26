@@ -7,7 +7,7 @@ android:layout_height="match_parent"
 tools:context=".modules.addDish.AddDishFragment">
 
     <EditText
-        android:id="@+id/editDishName"
+        android:id="@+id/editRecipe"
         android:layout_width="276dp"
         android:layout_height="37dp"
         android:layout_marginTop="56dp"
@@ -18,7 +18,7 @@ tools:context=".modules.addDish.AddDishFragment">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toEndOf="@+id/recipeTextView"
-        app:layout_constraintTop_toBottomOf="@+id/editRecipe" />
+        app:layout_constraintTop_toBottomOf="@+id/editDishName" />
 
     <TextView
         android:id="@+id/recipeTextView"
@@ -41,7 +41,7 @@ tools:context=".modules.addDish.AddDishFragment">
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editRecipe"
+        android:id="@+id/editDishName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

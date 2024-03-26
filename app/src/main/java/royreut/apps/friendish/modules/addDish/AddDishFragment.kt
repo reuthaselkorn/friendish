@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import royreut.apps.friendish.R
 import royreut.apps.friendish.models.Dish
 import royreut.apps.friendish.models.Model
+import java.util.UUID
 
 class AddDishFragment : Fragment() {
 
@@ -46,8 +47,9 @@ class AddDishFragment : Fragment() {
             saveButton?.setOnClickListener {
                 val name = dishNameTextField?.text.toString()
                 val recipe = recipeTextField?.text.toString()
+                val id = UUID.randomUUID().toString()
 
-                val dish = Dish(name, recipe, false)
+                val dish = Dish(id, name, recipe, false)
 
                 Model.instance.addDish(dish) {
                     Navigation.findNavController(it).popBackStack(R.id.dishesFragment, false)

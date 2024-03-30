@@ -23,7 +23,7 @@ class DishesListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dishes_list)
 
-        Model.instance.getAllDishes { dishes -> this.dishes = dishes }
+//        Model.instance.getAllDishes { dishes -> this.dishes = dishes }
 
         dishesListView = findViewById(R.id.lvDishesList)
         dishesListView?.adapter = DishListAdapter(dishes)

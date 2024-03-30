@@ -1,6 +1,7 @@
 package royreut.apps.friendish.models
 
 import android.util.Log
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.firestoreSettings
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.memoryCacheSettings
@@ -24,8 +25,11 @@ class FirebaseModel {
         db.firestoreSettings = settings
     }
 
-    fun getAllDishes(callback: (List<Dish>) -> Unit) {
-        db.collection(DISHES_COLLECTION_PATH).get().addOnCompleteListener {
+    fun getAllDishes(since:Long, callback: (List<Dish>) -> Unit) {
+        db.collection(DISHES_COLLECTION_PATH)
+            .whereGreaterThanOrEqualTo(Dish.LAST_UPDATED, Timestamp(since,0))
+            .get()
+            .addOnCompleteListener {
             when (it.isSuccessful) {
                 true -> {
                     val dishes: MutableList<Dish> = mutableListOf()

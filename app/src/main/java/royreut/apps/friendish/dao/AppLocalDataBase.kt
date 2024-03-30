@@ -7,13 +7,11 @@ import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.models.Dish
 
 
-@Database(entities = [Dish::class], version = 2)
+@Database(entities = [Dish::class], version = 3)
 abstract class AppLocalDbRepository : RoomDatabase() {
     abstract fun dishDao():DishDao
 }
 object AppLocalDataBase {
-
-
 
     val db: AppLocalDbRepository by lazy {
         val context = MyApplication.Globals.appContext

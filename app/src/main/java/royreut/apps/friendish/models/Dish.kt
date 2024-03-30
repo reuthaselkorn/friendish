@@ -1,7 +1,11 @@
 package royreut.apps.friendish.models
 
+import android.content.Context
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
+import royreut.apps.friendish.base.MyApplication
 import java.util.UUID
 
 @Entity
@@ -9,7 +13,8 @@ data class Dish(
     @PrimaryKey val id:String,
     val name:String,
     val recipe:String,
-    var isChecked:Boolean) {
+    var isChecked:Boolean,
+    var lastUpdated:Long? = null) {
 
     companion object {
         const val ID_KEY = "id"
@@ -17,22 +22,48 @@ data class Dish(
         const val RECIPE_KEY = "recipe"
         const val IS_CHECKED_KEY = "isCheckes"
 
+        var lastUpdated:Long
+            get() {
+                return MyApplication
+                    .Globals
+                    .appContext
+                    ?.getSharedPreferences("TAG", Context.MODE_PRIVATE)
+                    ?.getLong(GET_LAST_UPDATED,0) ?:0
+            }
+            set (value) {
+                MyApplication
+                    .Globals
+                    ?.appContext
+                    ?.getSharedPreferences("TAG", Context.MODE_PRIVATE)
+                    ?.edit()
+                    ?.putLong(GET_LAST_UPDATED, value)?.apply()
+            }
+        const val LAST_UPDATED:String = "lastUpdated"
+        const val GET_LAST_UPDATED:String = "get_last_updated"
+
         fun fromJSON(json:Map<String, Any>):Dish {
             val id = json.get(ID_KEY) as? String ?: ""
             val name = json.get(NAME_KEY) as? String ?: ""
             val recipe = json.get(RECIPE_KEY) as? String?: ""
             val isChecked = json.get(IS_CHECKED_KEY) as? Boolean?: false
+            val dish = Dish(id, name, recipe, isChecked)
 
-            return Dish(id, name, recipe, isChecked)
+            val timestamp:Timestamp? = json[LAST_UPDATED] as? Timestamp
+            timestamp?.let {
+                dish.lastUpdated = it.seconds
+            }
+
+            return dish
         }
     }
 
     val json: Map<String, Any> get() {
         return hashMapOf(
-            "id" to id,
-            "name" to name,
-            "recipe" to recipe,
-            "isChecked" to isChecked,
+            ID_KEY to id,
+            NAME_KEY to name,
+            RECIPE_KEY to recipe,
+            IS_CHECKED_KEY to isChecked,
+            LAST_UPDATED to FieldValue.serverTimestamp()
         )
 
     }

@@ -11,6 +11,11 @@ class DishesRecyclerAdapter(var dishes:List<Dish>?): RecyclerView.Adapter<Dishes
 
     var listener: DishesRecyclerViewActivity.OnItemClickListener? = null
 
+    fun onDataUpdated(dishes: List<Dish>) {
+        this.dishes = dishes
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishesViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.dish_layout_row, parent, false)
         return DishesViewHolder(itemView, listener, dishes)

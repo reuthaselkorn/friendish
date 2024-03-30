@@ -1,5 +1,6 @@
 package royreut.apps.friendish.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -10,7 +11,7 @@ import royreut.apps.friendish.models.Dish
 @Dao
 interface DishDao {
     @Query("SELECT * FROM Dish")
-    fun getAll() : List<Dish>
+    fun getAll() : LiveData<MutableList<Dish>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg dish:Dish)
@@ -19,5 +20,5 @@ interface DishDao {
     fun delete(dish:Dish)
 
     @Query("SELECT * FROM Dish WHERE name =:name")
-    fun getDishByName(name:String): Dish
+    fun getDishByName(name:String): LiveData<Dish>
 }

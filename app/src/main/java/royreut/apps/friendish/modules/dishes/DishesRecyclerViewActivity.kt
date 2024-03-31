@@ -19,7 +19,6 @@ class DishesRecyclerViewActivity : AppCompatActivity() {
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position:Int)
         fun onDishClick(dish:Dish?)
     }
 

@@ -52,26 +52,16 @@ class DishesFragment : Fragment() {
         dishesRecyclerView?.layoutManager = LinearLayoutManager(context)
 
         adapter?.listener = object : DishesRecyclerViewActivity.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                Log.i("TAG", "position: $position")
-                val dish = adapter?.dishes?.get(position)
+            override fun onDishClick(dish: Dish?) {
+                Log.i("TAG", "dish: ${dish}")
                 dish?.let {
                     val action = DishesFragmentDirections.actionDishesFragmentToShowcaseDishFragment(it.name, it.recipe)
                     Navigation.findNavController(view).navigate(action)
                 }
             }
-
-            override fun onDishClick(dish: Dish?) {
-                Log.i("TAG", "dish: ${dish}")
-            }
         }
 
         dishesRecyclerView?.adapter = adapter
-
-        val addDishButton:ImageButton = binding.addDishFloatingButton
-        val action = Navigation.createNavigateOnClickListener(DishesFragmentDirections.actionGlobalAddDishFragment())
-
-        addDishButton.setOnClickListener(action)
 
         viewModel.dishes?.observe(viewLifecycleOwner) {
             adapter?.onDataUpdated(it)

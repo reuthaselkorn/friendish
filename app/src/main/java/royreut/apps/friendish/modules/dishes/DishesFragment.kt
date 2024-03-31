@@ -56,7 +56,7 @@ class DishesFragment : Fragment() {
                 Log.i("TAG", "position: $position")
                 val dish = adapter?.dishes?.get(position)
                 dish?.let {
-                    val action = DishesFragmentDirections.actionDishesFragmentToBlueFragment(it.name)
+                    val action = DishesFragmentDirections.actionDishesFragmentToShowcaseDishFragment(it.name, it.recipe)
                     Navigation.findNavController(view).navigate(action)
                 }
             }

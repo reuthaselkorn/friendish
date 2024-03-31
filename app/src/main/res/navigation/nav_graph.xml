@@ -11,17 +11,8 @@
         android:label="Dishes List"
         tools:layout="@layout/fragment_dishes">
         <action
-            android:id="@+id/action_dishesFragment_to_blueFragment"
-            app:destination="@id/blueFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/blueFragment"
-        android:name="royreut.apps.friendish.BlueFragment"
-        android:label="fragment_blue"
-        tools:layout="@layout/fragment_blue" >
-        <argument
-            android:name="TITLE"
-            app:argType="string" />
+            android:id="@+id/action_dishesFragment_to_showcaseDishFragment"
+            app:destination="@id/showcaseDishFragment" />
     </fragment>
     <fragment
         android:id="@+id/addDishFragment"
@@ -29,4 +20,21 @@
         android:label="Add Dish"
         tools:layout="@layout/fragment_add_dish" />
     <action android:id="@+id/action_global_addDishFragment" app:destination="@id/addDishFragment" />
+    <fragment
+        android:id="@+id/showcaseDishFragment"
+        android:name="royreut.apps.friendish.modules.showcaseDish.ShowcaseDishFragment"
+        android:label="Dish Details"
+        tools:layout="@layout/fragment_showcase_dish" >
+        <argument
+            android:name="DISH_NAME"
+            app:argType="string" />
+        <argument
+            android:name="DISH_RECIPE"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/apiFragment"
+        android:name="royreut.apps.friendish.modules.api.ApiFragment"
+        android:label="fragment_api"
+        tools:layout="@layout/fragment_api" />
 </navigation>

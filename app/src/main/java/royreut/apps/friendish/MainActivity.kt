@@ -36,10 +36,7 @@ class MainActivity : AppCompatActivity() {
                 navController?.navigateUp()
                 true
             }
-//            R.id.addNewDishButtonMenu -> {
-//                navController?.navigate(R.id.action_global_addDishFragment)
-//                true
-//            }
+
             else -> navController?.let { NavigationUI.onNavDestinationSelected(item, it) } ?: super.onOptionsItemSelected(item)
         }
     }

@@ -38,7 +38,6 @@ class DishesViewHolder(val itemView: View, val listener:DishesRecyclerViewActivi
 
         itemView.setOnClickListener {
             Log.i("TAG", "position: $adapterPosition")
-            listener?.onItemClick(adapterPosition)
             listener?.onDishClick(dish)
         }
     }

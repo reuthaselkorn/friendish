@@ -1,4 +1,4 @@
-package royreut.apps.friendish.modules
+package royreut.apps.friendish.modules.showcaseDish
 
 import android.os.Bundle
 import android.view.LayoutInflater

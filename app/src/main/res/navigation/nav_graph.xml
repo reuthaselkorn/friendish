@@ -22,7 +22,7 @@
     <action android:id="@+id/action_global_addDishFragment" app:destination="@id/addDishFragment" />
     <fragment
         android:id="@+id/showcaseDishFragment"
-        android:name="royreut.apps.friendish.modules.ShowcaseDishFragment"
+        android:name="royreut.apps.friendish.modules.showcaseDish.ShowcaseDishFragment"
         android:label="Dish Details"
         tools:layout="@layout/fragment_showcase_dish" >
         <argument
@@ -32,4 +32,9 @@
             android:name="DISH_RECIPE"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/apiFragment"
+        android:name="royreut.apps.friendish.modules.api.ApiFragment"
+        android:label="fragment_api"
+        tools:layout="@layout/fragment_api" />
 </navigation>

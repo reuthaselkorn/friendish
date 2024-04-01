@@ -9,7 +9,6 @@ import android.widget.TextView
 import royreut.apps.friendish.R
 import royreut.apps.friendish.databinding.FragmentApiBinding
 import royreut.apps.friendish.databinding.FragmentShowcaseDishBinding
-import royreut.apps.friendish.modules.showcaseDish.ShowcaseDishFragmentArgs
 
 class ApiFragment : Fragment() {
     private var _binding: FragmentApiBinding? = null

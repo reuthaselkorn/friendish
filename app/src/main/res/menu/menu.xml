@@ -13,4 +13,7 @@
         android:id="@+id/apiFragment"
         android:icon="@android:drawable/ic_menu_add"
         android:title="api" />
+    <item
+        android:id="@+id/logoutBtn"
+        android:title="Log out" />
 </menu>

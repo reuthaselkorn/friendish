@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
-
     private var navController:NavController? = null
     lateinit var auth: FirebaseAuth
 
@@ -43,13 +42,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val currentUser = auth.currentUser
+
         return when (item.itemId) {
             android.R.id.home -> {
                 navController?.navigateUp()
                 true
             }
+            R.id.logoutBtn -> {
+                auth.signOut()
+                navController?.navigateUp()
+                true
+            }
 
-            else -> navController?.let { NavigationUI.onNavDestinationSelected(item, it) } ?: super.onOptionsItemSelected(item)
+            else -> {
+                if (currentUser != null) {
+                    navController?.let { NavigationUI.onNavDestinationSelected(item, it) } ?: super.onOptionsItemSelected(item)
+                }
+                return true
+            }
         }
     }
 

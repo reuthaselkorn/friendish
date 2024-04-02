@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import royreut.apps.friendish.base.MyApplication
-import java.util.UUID
 
 @Entity
 data class Dish(
@@ -14,7 +13,7 @@ data class Dish(
     val name:String,
     val recipe:String,
     var isChecked:Boolean,
-    var imageUrl:String,
+    var imageUrl: String,
     var lastUpdated:Long? = null) {
 
     companion object {
@@ -48,7 +47,7 @@ data class Dish(
             val name = json[NAME_KEY] as? String ?: ""
             val recipe = json[RECIPE_KEY] as? String?: ""
             val isChecked = json[IS_CHECKED_KEY] as? Boolean?: false
-            val imageUrl = json[IMAGE_URL_KEY] as? String?: ""
+            val imageUrl = json[IMAGE_URL_KEY] as? String?: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg"
             val dish = Dish(id, name, recipe, isChecked, imageUrl)
 
             val timestamp:Timestamp? = json[LAST_UPDATED] as? Timestamp
@@ -60,7 +59,8 @@ data class Dish(
         }
     }
 
-    val json: Map<String, Any> get() {
+    val json: HashMap<String, Any?>
+        get() {
         return hashMapOf(
             ID_KEY to id,
             NAME_KEY to name,

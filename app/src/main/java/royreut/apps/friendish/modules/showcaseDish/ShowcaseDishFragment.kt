@@ -34,19 +34,22 @@ class ShowcaseDishFragment : Fragment() {
             ShowcaseDishFragmentArgs.fromBundle(it).dishrecipe
         }
 
+        val dishUrl = arguments?.let {
+            ShowcaseDishFragmentArgs.fromBundle(it).dishimageurl
+        }
+
         dishNameTextView = binding.showcaseRecipeName
         dishRecipeTextView = binding.showcaseDishRecipe
         dishImageView = binding.showcaseDishImage
 
         dishNameTextView?.text = dishName ?: "BOOP"
         dishRecipeTextView?.text = dishRecipe ?: "BOOP"
-        Picasso.get().load("https://media.geeksforgeeks.org/wp-content/uploads/20210101144014/gfglogo-300x300.png") // Equivalent of what ends up in onBitmapLoaded
-//            .placeholder(.mipmap.ic_launcher)
+        Picasso.get().load(dishUrl)
+//            .placeholder("https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
 //            .error(R.drawable.error_gfg)
             .centerCrop()
             .fit()
             .into(dishImageView);
-
 
         return view
     }

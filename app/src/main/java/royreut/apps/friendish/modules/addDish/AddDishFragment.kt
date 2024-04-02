@@ -15,12 +15,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
 import royreut.apps.friendish.R
 import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.databinding.FragmentAddDishBinding
@@ -34,6 +36,8 @@ class AddDishFragment : Fragment() {
 
     private var dishNameTextField: EditText? = null
     private var recipeTextField: EditText? = null
+    private var dishImageView: ImageView? = null
+    private var dishImageUri: Uri? = null
     private var saveButton: Button? = null
     private var cancelButton: Button? = null
     private var uploadImageButton: ImageButton? = null
@@ -64,6 +68,7 @@ class AddDishFragment : Fragment() {
     private fun setupUI(view: View) {
         dishNameTextField = binding.editDishName
         recipeTextField = binding.editRecipe
+        dishImageView = binding.previewDishImageView
         uploadImageButton = binding.uploadImageButton
         saveButton = binding.saveRecipeButton
         cancelButton = binding.cancelRecipeButton
@@ -83,15 +88,24 @@ class AddDishFragment : Fragment() {
             val name = dishNameTextField?.text.toString()
             val recipe = recipeTextField?.text.toString()
             val id = UUID.randomUUID().toString()
-            val imageUrl = ""
 
-            val dish = Dish(id, name, recipe, false, imageUrl)
-
-            Model.instance.addDish(dish) {
-                Navigation.findNavController(it).popBackStack(R.id.dishesFragment, false)
+            if (dishImageUri != null) {
+                uploadImageToServer { uri ->
+                    val dish = Dish(id, name, recipe, false, uri)
+                    saveDish(dish, it)
+                }
+            } else {
+                val dish = Dish(id, name, recipe, false, "https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
+                saveDish(dish, it)
             }
         }
+    }
+
+    private fun saveDish(dish:Dish, view: View) {
+        Model.instance.addDish(dish) {
+            Navigation.findNavController(view).popBackStack(R.id.dishesFragment, false)
         }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
@@ -105,29 +119,11 @@ class AddDishFragment : Fragment() {
         registerForActivityResult( ActivityResultContracts.StartActivityForResult()) { result ->
             if (result != null) {
                 // getting URI of selected Image
-                val imageUri: Uri? = result.data?.data
+                dishImageUri = result.data?.data
 
-                // val fileName = imageUri?.pathSegments?.last()
-
-                // extract the file name with extension
-                val sd = getFileName(MyApplication.Globals.appContext, imageUri!!)
-
-                // Upload Task with upload to directory 'file'
-                // and name of the file remains same
-                val uploadTask = storageRef.child("file/$sd").putFile(imageUri)
-
-                // On success, download the file URL and display it
-                uploadTask.addOnSuccessListener {
-                    // using glide library to display the image
-                    storageRef.child("upload/$sd").downloadUrl.addOnSuccessListener {
-
-                        Log.e("Firebase", "download passed - ${it.path}")
-                    }.addOnFailureListener {
-                        Log.e("Firebase", "Failed in downloading")
-                    }
-                }.addOnFailureListener {
-                    Log.e("Firebase", "Image Upload fail")
-                }
+                Picasso.get()
+                    .load(dishImageUri)
+                    .into(dishImageView);
             }
         }
 
@@ -144,5 +140,27 @@ class AddDishFragment : Fragment() {
             }
         }
         return uri.path?.lastIndexOf('/')?.let { uri.path?.substring(it) }
+    }
+
+    private fun uploadImageToServer(callback: (String) -> Unit) {
+                // extract the file name with extension
+        val sd = getFileName(MyApplication.Globals.appContext, dishImageUri!!)
+
+        // Upload Task with upload to directory 'file'
+        // and name of the file remains same
+        val uploadTask = storageRef.child("file/$sd").putFile(dishImageUri!!)
+
+        // On success, download the file URL and display it
+        uploadTask.addOnSuccessListener {
+            // using glide library to display the image
+            storageRef.child("file/$sd").downloadUrl.addOnSuccessListener {
+                Log.e("Firebase", "download passed - ${it.path}")
+                callback(it.toString())
+            }.addOnFailureListener {
+                Log.e("Firebase", "Failed in downloading")
+            }
+        }.addOnFailureListener {
+            Log.e("Firebase", "Image Upload fail")
+        }
     }
 }

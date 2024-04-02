@@ -31,6 +31,9 @@
         <argument
             android:name="DISH_RECIPE"
             app:argType="string" />
+        <argument
+            android:name="DISH_IMAGE_URL"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/apiFragment"

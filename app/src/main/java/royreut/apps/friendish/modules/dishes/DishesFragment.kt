@@ -50,7 +50,7 @@ class DishesFragment : Fragment() {
             override fun onDishClick(dish: Dish?) {
                 Log.i("TAG", "dish: ${dish}")
                 dish?.let {
-                    val action = DishesFragmentDirections.actionDishesFragmentToShowcaseDishFragment(it.name, it.recipe)
+                    val action = DishesFragmentDirections.actionDishesFragmentToShowcaseDishFragment(it.name, it.recipe, it.imageUrl)
                     Navigation.findNavController(view).navigate(action)
                 }
             }

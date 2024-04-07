@@ -33,7 +33,11 @@ class ApiFragment : Fragment() {
         btnSearch.setOnClickListener {
             recipeIdeaRepository = RecipeIdeaRepository()
             recipeIdeaRepository.getIdeas(qText.text.toString()) { recipeIdeas ->
-                result.text = recipeIdeas.get(0).title.toString() ?: "no recipe found"
+                if(recipeIdeas?.get(0)?.title != null) {
+                    result.text = recipeIdeas.get(0).title.toString() ?: "no recipe found"
+                } else {
+                    result.text = "No recipe found"
+                }
             }
         }
 

@@ -11,8 +11,8 @@ import royreut.apps.friendish.models.RecipeIdeaClient
 import royreut.apps.friendish.models.RecipeIdeasResult
 
 class RecipeIdeaRepository {
-    fun getIdeas(query: String, callback: (List<RecipeIdea>) -> Unit): LiveData<List<RecipeIdea>> {
-        val citiesLiveData = MutableLiveData<List<RecipeIdea>>()
+    fun getIdeas(query: String, callback: (List<RecipeIdea>?) -> Unit): LiveData<List<RecipeIdea>> {
+        val recipeIdeas = MutableLiveData<List<RecipeIdea>>()
 
         try {
             RecipeIdeaClient.recipeIdeasApi.getIdeas(query, 1).enqueue(object :
@@ -20,10 +20,13 @@ class RecipeIdeaRepository {
                 override fun onResponse(call: Call<RecipeIdeasResult>, response: Response<RecipeIdeasResult>) {
                     Log.i("recipe ideas", response.body()?.results.toString())
                     if (response.isSuccessful) {
-                        val citiesResult = response.body()
-                        citiesResult?.let {
-                            // TODO: fix and figure out why the response is null
-                            callback(it.results)
+                        val recipeIdeasResults = response.body()
+                        recipeIdeasResults?.let {
+                            if(it.results.isNotEmpty()) {
+                                callback(it.results)
+                            } else {
+                                callback(null)
+                            }
                         }
                     } else {
                         println("error: ${response.code()}")
@@ -38,6 +41,6 @@ class RecipeIdeaRepository {
             e.printStackTrace()
         }
 
-        return citiesLiveData
+        return recipeIdeas
     }
 }

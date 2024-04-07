@@ -1,23 +1,23 @@
 package royreut.apps.friendish.modules.auth
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import royreut.apps.friendish.R
-import royreut.apps.friendish.databinding.FragmentLoginBinding
 import royreut.apps.friendish.databinding.FragmentSignUpBinding
+import royreut.apps.friendish.models.Model
+import royreut.apps.friendish.models.User
 
 class SignUpFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
 
@@ -26,7 +26,6 @@ class SignUpFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = Firebase.auth
     }
 
     override fun onCreateView(
@@ -48,7 +47,10 @@ class SignUpFragment : Fragment() {
     fun onSignUpWithFirebase(view: View) {
         val email = emailTextView?.text.toString()
         val password = passwordTextView?.text.toString()
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+
+        val user = User(email, password);
+
+        Model.instance.signupUser(user) { task ->
             if (task.isSuccessful) {
                 Navigation.findNavController(view)
                     .navigate(R.id.action_signUpFragment_to_loginFragment)

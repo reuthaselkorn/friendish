@@ -1,5 +1,7 @@
 package royreut.apps.friendish.models
 
-class User {
+import androidx.room.PrimaryKey
 
+class User (@PrimaryKey val email:String,
+    val password:String){
 }

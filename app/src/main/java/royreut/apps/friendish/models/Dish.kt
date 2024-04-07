@@ -14,13 +14,15 @@ data class Dish(
     val name:String,
     val recipe:String,
     var isChecked:Boolean,
+    var author:String,
     var lastUpdated:Long? = null) {
 
     companion object {
         const val ID_KEY = "id"
         const val NAME_KEY = "name"
         const val RECIPE_KEY = "recipe"
-        const val IS_CHECKED_KEY = "isCheckes"
+        const val IS_CHECKED_KEY = "isChecked"
+        const val AUTHOR = "author"
 
         var lastUpdated:Long
             get() {
@@ -46,7 +48,8 @@ data class Dish(
             val name = json.get(NAME_KEY) as? String ?: ""
             val recipe = json.get(RECIPE_KEY) as? String?: ""
             val isChecked = json.get(IS_CHECKED_KEY) as? Boolean?: false
-            val dish = Dish(id, name, recipe, isChecked)
+            val author = json.get(AUTHOR) as? String?: ""
+            val dish = Dish(id, name, recipe, isChecked, author)
 
             val timestamp:Timestamp? = json[LAST_UPDATED] as? Timestamp
             timestamp?.let {
@@ -63,6 +66,7 @@ data class Dish(
             NAME_KEY to name,
             RECIPE_KEY to recipe,
             IS_CHECKED_KEY to isChecked,
+            AUTHOR to author,
             LAST_UPDATED to FieldValue.serverTimestamp()
         )
 

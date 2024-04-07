@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import royreut.apps.friendish.base.MyApplication
 
 class MainActivity : AppCompatActivity() {
     private var navController:NavController? = null
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.logoutBtn -> {
                 auth.signOut()
+                MyApplication.Globals.user = null
                 navController?.navigateUp()
                 true
             }

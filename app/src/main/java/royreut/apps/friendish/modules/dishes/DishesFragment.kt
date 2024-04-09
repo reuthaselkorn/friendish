@@ -2,17 +2,15 @@ package royreut.apps.friendish.modules.dishes
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import royreut.apps.friendish.R
 import royreut.apps.friendish.databinding.FragmentDishesBinding
 import royreut.apps.friendish.models.Dish
 import royreut.apps.friendish.models.Model
@@ -23,7 +21,6 @@ class DishesFragment : Fragment() {
 
     var dishesRecyclerView : RecyclerView? = null
     var adapter:DishesRecyclerAdapter? = null
-    var progressBar:ProgressBar? = null
 
     private var _binding:FragmentDishesBinding? = null
     private val binding get() = _binding!!
@@ -40,8 +37,6 @@ class DishesFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[DishViewModel::class.java]
 
-        progressBar = binding.progressBar
-        progressBar?.visibility = View.VISIBLE
         adapter = DishesRecyclerAdapter(viewModel.dishes?.value)
         viewModel.dishes = Model.instance.getAllDishes()
 
@@ -55,7 +50,7 @@ class DishesFragment : Fragment() {
             override fun onDishClick(dish: Dish?) {
                 Log.i("TAG", "dish: ${dish}")
                 dish?.let {
-                    val action = DishesFragmentDirections.actionDishesFragmentToShowcaseDishFragment(it.name, it.recipe)
+                    val action = DishesFragmentDirections.actionDishesFragmentToShowcaseDishFragment(it.name, it.recipe, it.imageUrl)
                     Navigation.findNavController(view).navigate(action)
                 }
             }
@@ -85,9 +80,7 @@ class DishesFragment : Fragment() {
     }
 
     fun reloadData() {
-        progressBar?.visibility = View.VISIBLE
         Model.instance.refreshAllDishes()
-        progressBar?.visibility = View.GONE
     }
 
     override fun onDestroy() {

@@ -5,11 +5,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.models.Dish
+import royreut.apps.friendish.models.User
 
 
-@Database(entities = [Dish::class], version = 5)
+@Database(entities = [Dish::class, User::class], version = 6)
 abstract class AppLocalDbRepository : RoomDatabase() {
     abstract fun dishDao():DishDao
+    abstract fun userDao():UserDao
 }
 object AppLocalDataBase {
 

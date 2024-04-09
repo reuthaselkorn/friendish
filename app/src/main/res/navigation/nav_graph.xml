@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/dishesFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/dishesFragment"
@@ -68,5 +68,5 @@
         android:id="@+id/profileFragment"
         android:name="royreut.apps.friendish.modules.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" /><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
+        tools:layout="@layout/fragment_profile" /><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/><action android:id="@+id/action_global_dishesFragment" app:destination="@id/dishesFragment"/>
 </navigation>

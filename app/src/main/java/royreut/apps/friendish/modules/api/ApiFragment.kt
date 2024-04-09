@@ -5,11 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import royreut.apps.friendish.R
-import royreut.apps.friendish.Repository.RecipeIdeaRepository
+import royreut.apps.friendish.repository.RecipeIdeaRepository
 import royreut.apps.friendish.databinding.FragmentApiBinding
-import royreut.apps.friendish.databinding.FragmentShowcaseDishBinding
 import royreut.apps.friendish.models.RecipeIdea
 
 class ApiFragment : Fragment() {

@@ -57,8 +57,8 @@ class LoginFragment : Fragment() {
         val email = emailTextView?.text.toString()
         val password = passwordTextView?.text.toString()
 
-        val user = User(email, password)
-        if(!(user.email.isNullOrBlank() || user.password.isNullOrBlank())) {
+        if(!(email.isNullOrBlank() || password.isNullOrBlank())) {
+            val user = User(email)
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d("TAG", "createUserWithEmail:success")

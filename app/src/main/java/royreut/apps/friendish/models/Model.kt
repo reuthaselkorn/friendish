@@ -76,7 +76,7 @@ class Model private constructor() {
     }
 
     fun signupUser(user: User, callback: (Task<AuthResult>) -> Unit) {
-        auth.createUserWithEmailAndPassword(user.email, user.password)
+        auth.createUserWithEmailAndPassword(user.email, user.password ?: "")
             .addOnCompleteListener { callback(it) }
     }
 }

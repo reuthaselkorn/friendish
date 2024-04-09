@@ -104,7 +104,7 @@ class AddDishFragment : Fragment() {
 
     private fun saveDish(dish:Dish, view: View) {
         Model.instance.addDish(dish) {
-            Navigation.findNavController(view).popBackStack(R.id.dishesFragment, false)
+            Navigation.findNavController(view).navigate(R.id.dishesFragment)
         }
     }
 

@@ -48,7 +48,7 @@ class SignUpFragment : Fragment() {
         val email = emailTextView?.text.toString()
         val password = passwordTextView?.text.toString()
 
-        val user = User(email, password);
+        val user = User(email);
 
         Model.instance.signupUser(user) { task ->
             if (task.isSuccessful) {

@@ -1,7 +1,9 @@
 package royreut.apps.friendish.models
 
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Entity
 class User (@PrimaryKey val email:String,
-    val password:String){
+    var password:String? = ""){
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ class LoginFragment : Fragment() {
 
     private var emailTextView: TextView? = null
     private var passwordTextView: TextView? = null
+    private var progressBar: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,9 @@ class LoginFragment : Fragment() {
         val view = binding.root
         emailTextView = binding.userEmail
         passwordTextView = binding.userPassword
+        progressBar = binding.progressBar
+
+        progressBar?.visibility = View.GONE
 
         val loginBtn = binding.loginBtn
         loginBtn.setOnClickListener(::onLoginButtonClicked)
@@ -51,9 +56,10 @@ class LoginFragment : Fragment() {
     }
 
     fun onLoginButtonClicked(view: View) {
-
         val email = emailTextView?.text.toString()
         val password = passwordTextView?.text.toString()
+
+        progressBar?.visibility = View.VISIBLE
 
         if(!(email.isNullOrBlank() || password.isNullOrBlank())) {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -68,7 +74,7 @@ class LoginFragment : Fragment() {
                         Toast.LENGTH_SHORT,
                     ).show()
                 }
-//                progressBar?.visibility = View.GONE
+                progressBar?.visibility = View.GONE
             }
         } else {
             Toast.makeText(
@@ -76,7 +82,7 @@ class LoginFragment : Fragment() {
                 "Authentication failed. please enter username and password",
                 Toast.LENGTH_SHORT,
             ).show()
-//            progressBar?.visibility = View.GONE
+            progressBar?.visibility = View.GONE
         }
     }
 

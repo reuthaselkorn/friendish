@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
-import royreut.apps.friendish.R
-import royreut.apps.friendish.Repository.RecipeIdeaRepository
+import royreut.apps.friendish.repository.RecipeIdeaRepository
 import royreut.apps.friendish.databinding.FragmentApiBinding
-import royreut.apps.friendish.models.RecipeIdea
 
 class ApiFragment : Fragment() {
     private lateinit var recipeIdeaRepository: RecipeIdeaRepository
@@ -49,9 +46,5 @@ class ApiFragment : Fragment() {
         }
 
         return view
-    }
-
-    fun onClickSearchRecipe(view : View) {
-
     }
 }

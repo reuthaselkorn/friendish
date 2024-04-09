@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/dishesFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/dishesFragment"
@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_dishesFragment_to_showcaseDishFragment"
             app:destination="@id/showcaseDishFragment" />
+        <action
+            android:id="@+id/action_dishesFragment_self"
+            app:destination="@id/dishesFragment" />
     </fragment>
     <fragment
         android:id="@+id/addDishFragment"
@@ -40,4 +43,25 @@
         android:name="royreut.apps.friendish.modules.api.ApiFragment"
         android:label="fragment_api"
         tools:layout="@layout/fragment_api" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="royreut.apps.friendish.modules.auth.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_dishesFragment3"
+            app:destination="@id/dishesFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="royreut.apps.friendish.modules.auth.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

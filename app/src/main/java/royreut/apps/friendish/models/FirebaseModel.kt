@@ -47,6 +47,9 @@ class FirebaseModel {
             .document(dish.id)
             .set(dish.json)
             .addOnSuccessListener { callback() }
+            .addOnFailureListener{
+                Log.e("add dish", "blah", it)
+            }
     }
 
 }

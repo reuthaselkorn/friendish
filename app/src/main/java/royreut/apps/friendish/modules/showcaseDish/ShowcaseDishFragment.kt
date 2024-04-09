@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.squareup.picasso.Picasso
 import royreut.apps.friendish.databinding.FragmentShowcaseDishBinding
 
 class ShowcaseDishFragment : Fragment() {
     private var dishNameTextView: TextView? = null
     private var dishRecipeTextView: TextView? = null
+    private var dishImageView: ImageView? = null
 
     private var _binding: FragmentShowcaseDishBinding? = null
     private val binding get() = _binding!!
@@ -31,11 +34,22 @@ class ShowcaseDishFragment : Fragment() {
             ShowcaseDishFragmentArgs.fromBundle(it).dishrecipe
         }
 
+        val dishUrl = arguments?.let {
+            ShowcaseDishFragmentArgs.fromBundle(it).dishimageurl
+        }
+
         dishNameTextView = binding.showcaseRecipeName
         dishRecipeTextView = binding.showcaseDishRecipe
+        dishImageView = binding.showcaseDishImage
 
         dishNameTextView?.text = dishName ?: "BOOP"
         dishRecipeTextView?.text = dishRecipe ?: "BOOP"
+        Picasso.get().load(dishUrl)
+//            .placeholder("https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
+//            .error(R.drawable.error_gfg)
+            .centerCrop()
+            .fit()
+            .into(dishImageView);
 
         return view
     }

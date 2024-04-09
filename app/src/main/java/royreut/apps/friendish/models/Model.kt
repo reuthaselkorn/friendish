@@ -60,8 +60,8 @@ class Model private constructor() {
                         }
                     }
                     Dish.lastUpdated = time
-                    dishListLoadingState.postValue(LoadingState.LOADED)
                 }
+                dishListLoadingState.postValue(LoadingState.LOADED)
             }
 
         }

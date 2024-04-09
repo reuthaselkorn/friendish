@@ -1,4 +1,4 @@
-package royreut.apps.friendish.Repository
+package royreut.apps.friendish.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData

@@ -13,6 +13,7 @@ data class Dish(
     val name:String,
     val recipe:String,
     var isChecked:Boolean,
+    var author:String,
     var imageUrl: String,
     var lastUpdated:Long? = null) {
 
@@ -21,6 +22,7 @@ data class Dish(
         const val NAME_KEY = "name"
         const val RECIPE_KEY = "recipe"
         const val IS_CHECKED_KEY = "isChecked"
+        const val AUTHOR = "author"
         const val IMAGE_URL_KEY = "imageUrl"
 
         var lastUpdated:Long
@@ -43,12 +45,13 @@ data class Dish(
         const val GET_LAST_UPDATED:String = "get_last_updated"
 
         fun fromJSON(json:Map<String, Any>):Dish {
-            val id = json[ID_KEY] as? String ?: ""
-            val name = json[NAME_KEY] as? String ?: ""
-            val recipe = json[RECIPE_KEY] as? String?: ""
-            val isChecked = json[IS_CHECKED_KEY] as? Boolean?: false
+            val id = json.get(ID_KEY) as? String ?: ""
+            val name = json.get(NAME_KEY) as? String ?: ""
+            val recipe = json.get(RECIPE_KEY) as? String?: ""
+            val isChecked = json.get(IS_CHECKED_KEY) as? Boolean?: false
+            val author = json.get(AUTHOR) as? String?: ""
             val imageUrl = json[IMAGE_URL_KEY] as? String?: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg"
-            val dish = Dish(id, name, recipe, isChecked, imageUrl)
+            val dish = Dish(id, name, recipe, isChecked, author, imageUrl)
 
             val timestamp:Timestamp? = json[LAST_UPDATED] as? Timestamp
             timestamp?.let {
@@ -59,14 +62,14 @@ data class Dish(
         }
     }
 
-    val json: HashMap<String, Any?>
-        get() {
+    val json: Map<String, Any> get() {
         return hashMapOf(
             ID_KEY to id,
             NAME_KEY to name,
             RECIPE_KEY to recipe,
             IS_CHECKED_KEY to isChecked,
             IMAGE_URL_KEY to imageUrl,
+            AUTHOR to author,
             LAST_UPDATED to FieldValue.serverTimestamp()
         )
     }

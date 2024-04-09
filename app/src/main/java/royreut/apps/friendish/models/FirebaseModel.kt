@@ -13,6 +13,7 @@ class FirebaseModel {
 
     companion object {
         const val DISHES_COLLECTION_PATH = "dishes"
+        const val USERS_COLLECTION_PATH = "users"
     }
 
     init {
@@ -49,6 +50,29 @@ class FirebaseModel {
             .addOnSuccessListener { callback() }
             .addOnFailureListener{
                 Log.e("add dish", "blah", it)
+            }
+    }
+
+    fun addUser(user: User, callback: () -> Unit) {
+        db.collection(USERS_COLLECTION_PATH)
+            .document(user.id)
+            .set(user.json)
+            .addOnSuccessListener { callback() }
+            .addOnFailureListener{
+                Log.e("add user", "blah", it)
+            }
+    }
+
+    fun getUserByEmail(email:String, callback: (User) -> Unit) {
+        db.collection(USERS_COLLECTION_PATH)
+            .whereEqualTo("email", email)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful && !it.result.isEmpty) {
+                    callback(User.fromJSON(it.result.first().data))
+                }
+            }.addOnFailureListener{
+                Log.e("getUser", "blah", it)
             }
     }
 

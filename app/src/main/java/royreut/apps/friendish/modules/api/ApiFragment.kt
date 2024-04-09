@@ -10,7 +10,6 @@ import android.widget.TextView
 import royreut.apps.friendish.R
 import royreut.apps.friendish.Repository.RecipeIdeaRepository
 import royreut.apps.friendish.databinding.FragmentApiBinding
-import royreut.apps.friendish.databinding.FragmentShowcaseDishBinding
 import royreut.apps.friendish.models.RecipeIdea
 
 class ApiFragment : Fragment() {
@@ -50,5 +49,9 @@ class ApiFragment : Fragment() {
         }
 
         return view
+    }
+
+    fun onClickSearchRecipe(view : View) {
+
     }
 }

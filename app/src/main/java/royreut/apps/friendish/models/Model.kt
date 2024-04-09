@@ -4,6 +4,11 @@ import android.os.Looper
 import androidx.core.os.HandlerCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.Task
+import com.google.firebase.Firebase
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.auth
+import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.dao.AppLocalDataBase
 import java.util.concurrent.Executors
 
@@ -18,6 +23,7 @@ class Model private constructor() {
     private var executor = Executors.newSingleThreadExecutor()
     private var mainHandler = HandlerCompat.createAsync(Looper.getMainLooper())
     private val firebaseModel = FirebaseModel()
+    private val auth = Firebase.auth
     private val dishes:LiveData<MutableList<Dish>>? = null
 
     val dishListLoadingState:MutableLiveData<LoadingState> = MutableLiveData(LoadingState.LOADED)
@@ -63,6 +69,24 @@ class Model private constructor() {
         firebaseModel.addDish(dish) {
             refreshAllDishes()
             callback()
+        }
+    }
+
+    fun signupUser(email:String, password:String, callback: (Task<AuthResult>) -> Unit) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                val user = it.result.user?.let { userResult -> User(userResult.uid, userResult.email ?: "", "") }
+                if (user != null) {
+                    firebaseModel.addUser(user) {
+                        callback(it)
+                    }
+                }
+            }
+    }
+
+    fun getUserByEmail(email: String) {
+        firebaseModel.getUserByEmail(email) {
+            MyApplication.Globals.user = it
         }
     }
 }

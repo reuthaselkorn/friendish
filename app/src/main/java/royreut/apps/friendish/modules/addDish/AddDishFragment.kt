@@ -84,18 +84,19 @@ class AddDishFragment : Fragment() {
         };
 
         cancelButton?.setOnClickListener { Navigation.findNavController(it).popBackStack(R.id.dishesFragment, false) }
-        saveButton?.setOnClickListener {
-            val name = dishNameTextField?.text.toString()
-            val recipe = recipeTextField?.text.toString()
-            val id = UUID.randomUUID().toString()
+            saveButton?.setOnClickListener {
+                val name = dishNameTextField?.text.toString()
+                val recipe = recipeTextField?.text.toString()
+                val author = MyApplication.Globals.user?.email ?: ""
+                val id = UUID.randomUUID().toString()
 
             if (dishImageUri != null) {
                 uploadImageToServer { uri ->
-                    val dish = Dish(id, name, recipe, false, uri)
+                    val dish = Dish(id, name, recipe, false, author, uri)
                     saveDish(dish, it)
                 }
             } else {
-                val dish = Dish(id, name, recipe, false, "https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
+                val dish = Dish(id, name, recipe, false, author, "https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
                 saveDish(dish, it)
             }
         }
@@ -103,7 +104,7 @@ class AddDishFragment : Fragment() {
 
     private fun saveDish(dish:Dish, view: View) {
         Model.instance.addDish(dish) {
-            Navigation.findNavController(view).popBackStack(R.id.dishesFragment, false)
+            Navigation.findNavController(view).navigate(R.id.dishesFragment)
         }
     }
 

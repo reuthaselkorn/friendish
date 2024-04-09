@@ -14,6 +14,8 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import royreut.apps.friendish.base.MyApplication
+import royreut.apps.friendish.models.FirebaseModel
+import royreut.apps.friendish.models.Model
 import royreut.apps.friendish.models.User
 
 class MainActivity : AppCompatActivity() {
@@ -38,8 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val user = User(currentUser.email ?: "")
-            MyApplication.Globals.user = user
+            currentUser.email?.let { Model.instance.getUserByEmail(it) }
             navController?.navigate(R.id.action_loginFragment_to_dishesFragment3)
         }
 

@@ -8,13 +8,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import royreut.apps.friendish.R
 import royreut.apps.friendish.databinding.FragmentSignUpBinding
 import royreut.apps.friendish.models.Model
-import royreut.apps.friendish.models.User
 
 class SignUpFragment : Fragment() {
 
@@ -48,9 +44,7 @@ class SignUpFragment : Fragment() {
         val email = emailTextView?.text.toString()
         val password = passwordTextView?.text.toString()
 
-        val user = User(email);
-
-        Model.instance.signupUser(user) { task ->
+        Model.instance.signupUser(email, password) { task ->
             if (task.isSuccessful) {
                 Navigation.findNavController(view)
                     .navigate(R.id.action_signUpFragment_to_loginFragment)

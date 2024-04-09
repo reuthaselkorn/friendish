@@ -1,17 +1,14 @@
 package royreut.apps.friendish.models
 
 import android.os.Looper
-import android.widget.Toast
 import androidx.core.os.HandlerCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.Navigation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import royreut.apps.friendish.R
+import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.dao.AppLocalDataBase
 import java.util.concurrent.Executors
 
@@ -75,8 +72,21 @@ class Model private constructor() {
         }
     }
 
-    fun signupUser(user: User, callback: (Task<AuthResult>) -> Unit) {
-        auth.createUserWithEmailAndPassword(user.email, user.password ?: "")
-            .addOnCompleteListener { callback(it) }
+    fun signupUser(email:String, password:String, callback: (Task<AuthResult>) -> Unit) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                val user = it.result.user?.let { userResult -> User(userResult.uid, userResult.email ?: "", "") }
+                if (user != null) {
+                    firebaseModel.addUser(user) {
+                        callback(it)
+                    }
+                }
+            }
+    }
+
+    fun getUserByEmail(email: String) {
+        firebaseModel.getUserByEmail(email) {
+            MyApplication.Globals.user = it
+        }
     }
 }

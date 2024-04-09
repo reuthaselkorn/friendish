@@ -15,6 +15,7 @@ import com.google.firebase.auth.auth
 import royreut.apps.friendish.R
 import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.databinding.FragmentLoginBinding
+import royreut.apps.friendish.models.Model
 import royreut.apps.friendish.models.User
 
 class LoginFragment : Fragment() {
@@ -58,11 +59,10 @@ class LoginFragment : Fragment() {
         val password = passwordTextView?.text.toString()
 
         if(!(email.isNullOrBlank() || password.isNullOrBlank())) {
-            val user = User(email)
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d("TAG", "createUserWithEmail:success")
-                    MyApplication.Globals.user = user
+                    Model.instance.getUserByEmail(email)
                     Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_dishesFragment3)
                 } else {
                     Log.w("TAG", "createUserWithEmail:failure", task.exception)

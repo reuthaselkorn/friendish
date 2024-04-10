@@ -63,6 +63,20 @@ class FirebaseModel {
             }
     }
 
+    fun updateUser(id:String, nickname:String, callback: () -> Unit) {
+        db.collection(USERS_COLLECTION_PATH)
+            .document(id)
+            .update("nickname", nickname)
+            .addOnCompleteListener {
+                Log.i("updateUser", "success")
+                callback()
+            }
+            .addOnFailureListener{
+                Log.e("updateUser", "error")
+                callback()
+            }
+    }
+
     fun getUserByEmail(email:String, callback: (User) -> Unit) {
         db.collection(USERS_COLLECTION_PATH)
             .whereEqualTo("email", email)

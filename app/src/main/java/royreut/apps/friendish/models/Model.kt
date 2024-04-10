@@ -75,8 +75,14 @@ class Model private constructor() {
     fun signupUser(email:String, password:String, callback: (Task<AuthResult>) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                val user = it.result.user?.let { userResult -> User(userResult.uid, userResult.email ?: "", "") }
+                val user = it.result.user?.let { userResult -> User(
+                    userResult.uid,
+                    userResult.email ?: "",
+                    "",
+                    "nickname"
+                    ) }
                 if (user != null) {
+                    user.lastUpdated = System.currentTimeMillis()
                     firebaseModel.addUser(user) {
                         callback(it)
                     }
@@ -84,8 +90,17 @@ class Model private constructor() {
             }
     }
 
+    fun updateUser(id:String, nickname: String, callback: () -> Unit) {
+        firebaseModel.updateUser(id, nickname) {
+            callback()
+        }
+    }
+
     fun getUserByEmail(email: String) {
         firebaseModel.getUserByEmail(email) {
+            executor.execute {
+                database.userDao().insert(it)
+            }
             MyApplication.Globals.user = it
         }
     }

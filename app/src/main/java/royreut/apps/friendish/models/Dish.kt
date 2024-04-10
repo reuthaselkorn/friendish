@@ -59,7 +59,7 @@ data class Dish(
                     ?.putLong(GET_LAST_UPDATED_USER_DISHES, value)?.apply()
             }
         const val LAST_UPDATED:String = "lastUpdated"
-        const val GET_LAST_UPDATED:String = "get_last_updated"
+        const val GET_LAST_UPDATED:String = "get_last_updated_dish"
         const val GET_LAST_UPDATED_USER_DISHES:String = "get_last_updated_user_dishes"
 
         fun fromJSON(json:Map<String, Any>):Dish {

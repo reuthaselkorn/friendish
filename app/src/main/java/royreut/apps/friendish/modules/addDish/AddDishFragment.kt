@@ -84,11 +84,11 @@ class AddDishFragment : Fragment() {
         };
 
         cancelButton?.setOnClickListener { Navigation.findNavController(it).popBackStack(R.id.dishesFragment, false) }
-            saveButton?.setOnClickListener {
-                val name = dishNameTextField?.text.toString()
-                val recipe = recipeTextField?.text.toString()
-                val author = MyApplication.Globals.user?.email ?: ""
-                val id = UUID.randomUUID().toString()
+        saveButton?.setOnClickListener {
+            val name = dishNameTextField?.text.toString()
+            val recipe = recipeTextField?.text.toString()
+            val author = MyApplication.Globals.user?.email ?: ""
+            val id = UUID.randomUUID().toString()
 
             if (dishImageUri != null) {
                 uploadImageToServer { uri ->

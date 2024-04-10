@@ -8,7 +8,7 @@ import royreut.apps.friendish.models.Dish
 import royreut.apps.friendish.models.User
 
 
-@Database(entities = [Dish::class, User::class], version = 7)
+@Database(entities = [Dish::class, User::class], version = 8)
 abstract class AppLocalDbRepository : RoomDatabase() {
     abstract fun dishDao():DishDao
     abstract fun userDao():UserDao

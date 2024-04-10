@@ -58,18 +58,18 @@ class UserDishesFragment : Fragment() {
 
         dishesRecyclerView?.adapter = adapter
 
-        viewModel.dishes?.observe(viewLifecycleOwner) {
+        viewModel.myDishes?.observe(viewLifecycleOwner) {
             adapter?.onDataUpdated(it)
             adapter?.notifyDataSetChanged()
         }
 
-//        binding.pullToRefresh.setOnRefreshListener {
-//            reloadData()
-//        }
+        binding.userDishesPullToRefresh.setOnRefreshListener {
+            reloadData()
+        }
 
-//        Model.instance.dishListLoadingState.observe(viewLifecycleOwner) {state ->
-//            binding.pullToRefresh.isRefreshing = state == Model.LoadingState.LOADING
-//        }
+        Model.instance.dishListLoadingState.observe(viewLifecycleOwner) {state ->
+            binding.userDishesPullToRefresh.isRefreshing = state == Model.LoadingState.LOADING
+        }
 
         return view
     }
@@ -80,7 +80,7 @@ class UserDishesFragment : Fragment() {
     }
 
     fun reloadData() {
-        Model.instance.refreshAllDishes()
+        Model.instance.refreshAllUserDishes(MyApplication.Globals.user?.email ?: "")
     }
 
     override fun onDestroy() {

@@ -66,6 +66,7 @@ class Model private constructor() {
     }
 
     fun refreshAllUserDishes(userEmail: String){
+        dishListLoadingState.value = LoadingState.LOADING
         val lastUpdated:Long =  Dish.userDishesLastUpdated
         firebaseModel.getAllUserDishes(userEmail,lastUpdated) {list ->
             executor.execute {
@@ -80,6 +81,7 @@ class Model private constructor() {
                     }
                     Dish.userDishesLastUpdated = time
                 }
+                dishListLoadingState.postValue(LoadingState.LOADED)
             }
         }
     }

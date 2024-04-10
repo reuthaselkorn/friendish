@@ -20,7 +20,7 @@ class UserDishesViewHolder(val itemView: View, val listener: UserDishesRecyclerV
 
         Picasso.get().load(dish?.imageUrl)
 //            .placeholder("https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
-//            .error(R.drawable.error_gfg)
+            .error(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .fit()
             .into(dishImage);
@@ -38,10 +38,10 @@ class UserDishesViewHolder(val itemView: View, val listener: UserDishesRecyclerV
     var dish: Dish? = null
 
     init {
-        nameTextView = itemView.findViewById(R.id.lvDishListName)
-        recipeTextView = itemView.findViewById(R.id.lvDishListRecipe)
-        dishCheckbox = itemView.findViewById(R.id.lvDishListCheckBox)
-        dishImage = itemView.findViewById(R.id.imageView)
+        nameTextView = itemView.findViewById(R.id.lvUserDishListName)
+        recipeTextView = itemView.findViewById(R.id.lvUserDishListRecipe)
+        dishCheckbox = itemView.findViewById(R.id.lvUserDishListCheckBox)
+        dishImage = itemView.findViewById(R.id.imageViewUserDish)
 
         dishCheckbox?.setOnClickListener {
             dishes?.get(adapterPosition)?.isChecked = dishCheckbox?.isChecked ?: false

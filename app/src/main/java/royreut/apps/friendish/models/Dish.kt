@@ -41,8 +41,26 @@ data class Dish(
                     ?.edit()
                     ?.putLong(GET_LAST_UPDATED, value)?.apply()
             }
+
+        var userDishesLastUpdated:Long
+            get() {
+                return MyApplication
+                    .Globals
+                    .appContext
+                    ?.getSharedPreferences("TAG", Context.MODE_PRIVATE)
+                    ?.getLong(GET_LAST_UPDATED_USER_DISHES,0) ?:0
+            }
+            set (value) {
+                MyApplication
+                    .Globals
+                    ?.appContext
+                    ?.getSharedPreferences("TAG", Context.MODE_PRIVATE)
+                    ?.edit()
+                    ?.putLong(GET_LAST_UPDATED_USER_DISHES, value)?.apply()
+            }
         const val LAST_UPDATED:String = "lastUpdated"
         const val GET_LAST_UPDATED:String = "get_last_updated_dish"
+        const val GET_LAST_UPDATED_USER_DISHES:String = "get_last_updated_user_dishes"
 
         fun fromJSON(json:Map<String, Any>):Dish {
             val id = json.get(ID_KEY) as? String ?: ""

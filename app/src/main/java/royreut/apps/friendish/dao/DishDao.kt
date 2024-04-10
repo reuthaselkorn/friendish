@@ -21,4 +21,7 @@ interface DishDao {
 
     @Query("SELECT * FROM Dish WHERE name =:name")
     fun getDishByName(name:String): LiveData<Dish>
+
+    @Query("SELECT * FROM Dish WHERE author =:email")
+    fun getDishesByUser(email:String): LiveData<MutableList<Dish>>
 }

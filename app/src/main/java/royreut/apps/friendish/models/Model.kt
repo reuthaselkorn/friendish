@@ -11,6 +11,7 @@ import com.google.firebase.auth.auth
 import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.dao.AppLocalDataBase
 import java.util.concurrent.Executors
+import java.util.stream.Collectors
 
 class Model private constructor() {
 
@@ -25,6 +26,7 @@ class Model private constructor() {
     private val firebaseModel = FirebaseModel()
     private val auth = Firebase.auth
     private val dishes:LiveData<MutableList<Dish>>? = null
+    private val myDishes:LiveData<MutableList<Dish>>? = null
 
     val dishListLoadingState:MutableLiveData<LoadingState> = MutableLiveData(LoadingState.LOADED)
 
@@ -60,9 +62,33 @@ class Model private constructor() {
                 }
                 dishListLoadingState.postValue(LoadingState.LOADED)
             }
-
         }
+    }
 
+    fun refreshAllUserDishes(userEmail: String){
+        dishListLoadingState.value = LoadingState.LOADING
+        val lastUpdated:Long =  Dish.userDishesLastUpdated
+        firebaseModel.getAllUserDishes(userEmail,lastUpdated) {list ->
+            executor.execute {
+                var time = lastUpdated
+                for (dish in list) {
+                    database.dishDao().insert(dish)
+
+                    dish.lastUpdated?.let {
+                        if (time < it) {
+                            time = dish.lastUpdated ?: System.currentTimeMillis()
+                        }
+                    }
+                    Dish.userDishesLastUpdated = time
+                }
+                dishListLoadingState.postValue(LoadingState.LOADED)
+            }
+        }
+    }
+
+    fun getAllDishesOfUser(userEmail:String): LiveData<MutableList<Dish>>? {
+        refreshAllUserDishes(userEmail)
+        return myDishes ?: database.dishDao().getDishesByUser(userEmail)
     }
 
     fun addDish(dish: Dish, callback: () -> Unit) {

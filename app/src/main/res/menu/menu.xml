@@ -10,6 +10,10 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="add" />
     <item
+        android:id="@+id/userDishesFragment"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="my dishes" />
+    <item
         android:id="@+id/apiFragment"
         android:icon="@android:drawable/ic_menu_add"
         android:title="api" />

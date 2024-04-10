@@ -18,6 +18,15 @@
             app:destination="@id/dishesFragment" />
     </fragment>
     <fragment
+        android:id="@+id/userDishesFragment"
+        android:name="royreut.apps.friendish.modules.userDishes.UserDishesFragment"
+        android:label="My Dishes List"
+        tools:layout="@layout/fragment_user_dishes">
+        <action
+            android:id="@+id/action_dishesFragment_to_showcaseDishFragment"
+            app:destination="@id/showcaseDishFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/addDishFragment"
         android:name="royreut.apps.friendish.modules.addDish.AddDishFragment"
         android:label="Add Dish"

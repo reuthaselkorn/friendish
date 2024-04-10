@@ -43,6 +43,24 @@ class FirebaseModel {
         }
     }
 
+    fun getAllUserDishes(userEmail:String,since:Long, callback: (List<Dish>) -> Unit) {
+        db.collection(DISHES_COLLECTION_PATH)
+            .whereGreaterThanOrEqualTo(Dish.GET_LAST_UPDATED_USER_DISHES, Timestamp(since,0))
+            .whereEqualTo("author", userEmail)
+            .get()
+            .addOnCompleteListener {
+                when (it.isSuccessful) {
+                    true -> {8
+                        val dishes: MutableList<Dish> = mutableListOf()
+                        for (json in it.result) {
+                            dishes.add(Dish.fromJSON(json.data))
+                        }
+                        callback(dishes)
+                    } false -> callback(listOf())
+                }
+            }
+    }
+
     fun addDish(dish: Dish, callback: () -> Unit) {
         db.collection(DISHES_COLLECTION_PATH)
             .document(dish.id)

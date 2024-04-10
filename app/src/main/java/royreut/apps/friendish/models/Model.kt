@@ -77,6 +77,7 @@ class Model private constructor() {
             .addOnCompleteListener {
                 val user = it.result.user?.let { userResult -> User(userResult.uid, userResult.email ?: "", "") }
                 if (user != null) {
+                    user.lastUpdated = System.currentTimeMillis()
                     firebaseModel.addUser(user) {
                         callback(it)
                     }
@@ -86,6 +87,9 @@ class Model private constructor() {
 
     fun getUserByEmail(email: String) {
         firebaseModel.getUserByEmail(email) {
+            executor.execute {
+                database.userDao().insert(it)
+            }
             MyApplication.Globals.user = it
         }
     }

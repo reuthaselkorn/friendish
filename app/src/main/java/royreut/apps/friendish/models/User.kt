@@ -18,25 +18,7 @@ class User (
         const val ID_KEY = "id"
         const val EMAIL_KEY = "email"
         const val IMAGE_URL_KEY = "imageUrl"
-
-        var lastUpdated:Long
-            get() {
-                return MyApplication
-                    .Globals
-                    .appContext
-                    ?.getSharedPreferences("TAG", Context.MODE_PRIVATE)
-                    ?.getLong(GET_LAST_UPDATED,0) ?:0
-            }
-            set (value) {
-                MyApplication
-                    .Globals
-                    ?.appContext
-                    ?.getSharedPreferences("TAG", Context.MODE_PRIVATE)
-                    ?.edit()
-                    ?.putLong(GET_LAST_UPDATED, value)?.apply()
-            }
         const val LAST_UPDATED:String = "lastUpdated"
-        const val GET_LAST_UPDATED:String = "get_last_updated"
 
         fun fromJSON(json:Map<String, Any>):User {
             val id = json.get(ID_KEY) as? String ?: ""

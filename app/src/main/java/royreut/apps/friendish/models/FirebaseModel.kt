@@ -61,6 +61,16 @@ class FirebaseModel {
             }
     }
 
+    fun deleteDish(dish: Dish, callback: () -> Unit) {
+        db.collection(DISHES_COLLECTION_PATH)
+            .document(dish.id)
+            .delete()
+            .addOnSuccessListener { callback() }
+            .addOnFailureListener{
+                Log.e("delete dish", "blah", it)
+            }
+    }
+
     fun addDish(dish: Dish, callback: () -> Unit) {
         db.collection(DISHES_COLLECTION_PATH)
             .document(dish.id)

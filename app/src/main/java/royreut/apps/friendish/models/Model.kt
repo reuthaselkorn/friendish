@@ -98,6 +98,16 @@ class Model private constructor() {
         }
     }
 
+    fun deleteDish(dish: Dish, callback: () -> Unit) {
+        firebaseModel.deleteDish(dish) {
+            executor.execute {
+                database.dishDao().delete(dish)
+            }
+            refreshAllUserDishes(MyApplication.Globals.user?.email ?: "")
+            callback()
+        }
+    }
+
     fun signupUser(email:String, password:String, callback: (Task<AuthResult>) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {

@@ -103,7 +103,6 @@ class Model private constructor() {
             executor.execute {
                 database.dishDao().delete(dish)
             }
-            refreshAllUserDishes(MyApplication.Globals.user?.email ?: "")
             callback()
         }
     }

@@ -52,7 +52,6 @@ class UserDishesViewHolder(val itemView: View, val listener: UserDishesRecyclerV
                     Log.i("TAG", "deleted position: $adapterPosition")
                 }
             }
-//            dishes?.get(adapterPosition)?.isChecked = dishCheckbox?.isChecked ?: false
         }
 
         itemView.setOnClickListener {

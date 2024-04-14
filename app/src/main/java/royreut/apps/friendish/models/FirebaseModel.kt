@@ -81,10 +81,13 @@ class FirebaseModel {
             }
     }
 
-    fun updateUser(id:String, nickname:String, callback: () -> Unit) {
+    fun updateUser(id:String, nickname:String, imageUri:String, callback: () -> Unit) {
         db.collection(USERS_COLLECTION_PATH)
             .document(id)
-            .update("nickname", nickname)
+            .update(mapOf(
+                "nickname" to nickname,
+                "imageUrl" to imageUri
+            ))
             .addOnCompleteListener {
                 Log.i("updateUser", "success")
                 callback()

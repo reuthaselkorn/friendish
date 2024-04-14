@@ -98,6 +98,13 @@ class Model private constructor() {
         }
     }
 
+    fun editDish(dish: Dish, callback: () -> Unit) {
+        firebaseModel.editDish(dish) {
+            refreshAllUserDishes(MyApplication.Globals.user?.email ?: "")
+            callback()
+        }
+    }
+
     fun deleteDish(dish: Dish, callback: () -> Unit) {
         firebaseModel.deleteDish(dish) {
             executor.execute {
@@ -137,6 +144,12 @@ class Model private constructor() {
                 database.userDao().insert(it)
             }
             MyApplication.Globals.user = it
+        }
+    }
+
+    fun getDishById(id: String, callback: (Dish) -> Unit) {
+        firebaseModel.getDishById(id) {
+            callback(it)
         }
     }
 }

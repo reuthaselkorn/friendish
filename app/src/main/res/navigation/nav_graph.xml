@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_dishesFragment_to_showcaseDishFragment"
             app:destination="@id/showcaseDishFragment" />
+        <action
+            android:id="@+id/action_userDishesFragment_to_editDishFragment"
+            app:destination="@id/editDishFragment" />
     </fragment>
     <fragment
         android:id="@+id/addDishFragment"
@@ -78,4 +81,13 @@
         android:name="royreut.apps.friendish.modules.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" /><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/><action android:id="@+id/action_global_dishesFragment" app:destination="@id/dishesFragment"/>
+    <fragment
+        android:id="@+id/editDishFragment"
+        android:name="royreut.apps.friendish.modules.editDish.EditDishFragment"
+        android:label="fragment_edit_dish"
+        tools:layout="@layout/fragment_edit_dish" >
+    <argument
+        android:name="DISH_ID"
+        app:argType="string" />
+    </fragment>
 </navigation>

@@ -81,6 +81,16 @@ class FirebaseModel {
             }
     }
 
+    fun editDish(dish: Dish, callback: () -> Unit) {
+        db.collection(DISHES_COLLECTION_PATH)
+            .document(dish.id)
+            .update(Dish.IMAGE_URL_KEY, dish.imageUrl, Dish.RECIPE_KEY, dish.recipe, Dish.NAME_KEY, dish.name)
+            .addOnSuccessListener { callback() }
+            .addOnFailureListener{
+                Log.e("update dish", "blah", it)
+            }
+    }
+
     fun addUser(user: User, callback: () -> Unit) {
         db.collection(USERS_COLLECTION_PATH)
             .document(user.id)
@@ -115,6 +125,19 @@ class FirebaseModel {
                 }
             }.addOnFailureListener{
                 Log.e("getUser", "blah", it)
+            }
+    }
+
+    fun getDishById(id:String, callback: (Dish) -> Unit) {
+        db.collection(DISHES_COLLECTION_PATH)
+            .whereEqualTo("id", id)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful && !it.result.isEmpty) {
+                    callback(Dish.fromJSON(it.result.first().data))
+                }
+            }.addOnFailureListener{
+                Log.e("getDish", "blah", it)
             }
     }
 

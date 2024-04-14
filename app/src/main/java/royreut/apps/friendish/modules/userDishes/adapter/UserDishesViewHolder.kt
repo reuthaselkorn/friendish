@@ -7,11 +7,14 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import royreut.apps.friendish.R
 import royreut.apps.friendish.models.Dish
 import royreut.apps.friendish.models.Model
+import royreut.apps.friendish.modules.userDishes.UserDishesFragment
+import royreut.apps.friendish.modules.userDishes.UserDishesFragmentDirections
 import royreut.apps.friendish.modules.userDishes.UserDishesRecyclerViewActivity
 
 class UserDishesViewHolder(val itemView: View, val listener: UserDishesRecyclerViewActivity.OnItemClickListener?, var dishes:List<Dish>?): RecyclerView.ViewHolder(itemView) {
@@ -42,7 +45,8 @@ class UserDishesViewHolder(val itemView: View, val listener: UserDishesRecyclerV
 
         editDishButton?.setOnClickListener {
             //edit dish
-//            dishes?.get(adapterPosition)?.isChecked = dishCheckbox?.isChecked ?: false
+            val action = UserDishesFragmentDirections.actionUserDishesFragmentToEditDishFragment(dishes?.get(adapterPosition)?.id ?: "")
+            Navigation.findNavController(itemView).navigate(action)
         }
 
         deleteDishButton?.setOnClickListener {

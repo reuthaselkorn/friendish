@@ -98,6 +98,22 @@ class Model private constructor() {
         }
     }
 
+    fun editDish(dish: Dish, callback: () -> Unit) {
+        firebaseModel.editDish(dish) {
+            refreshAllUserDishes(MyApplication.Globals.user?.email ?: "")
+            callback()
+        }
+    }
+
+    fun deleteDish(dish: Dish, callback: () -> Unit) {
+        firebaseModel.deleteDish(dish) {
+            executor.execute {
+                database.dishDao().delete(dish)
+            }
+            callback()
+        }
+    }
+
     fun signupUser(email:String, password:String, nickname: String, uri:String, callback: (Task<AuthResult>) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
@@ -128,6 +144,12 @@ class Model private constructor() {
                 database.userDao().insert(it)
             }
             MyApplication.Globals.user = it
+        }
+    }
+
+    fun getDishById(id: String, callback: (Dish) -> Unit) {
+        firebaseModel.getDishById(id) {
+            callback(it)
         }
     }
 }

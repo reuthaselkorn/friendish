@@ -89,5 +89,5 @@
     <argument
         android:name="DISH_ID"
         app:argType="string" />
-    </fragment>
+    </fragment><action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment"/>
 </navigation>

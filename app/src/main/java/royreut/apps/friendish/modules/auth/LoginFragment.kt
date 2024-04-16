@@ -3,21 +3,22 @@ package royreut.apps.friendish.modules.auth
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import royreut.apps.friendish.R
-import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.databinding.FragmentLoginBinding
 import royreut.apps.friendish.models.Model
-import royreut.apps.friendish.models.User
 
 class LoginFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
@@ -30,7 +31,13 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         auth = Firebase.auth
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(
@@ -51,6 +58,7 @@ class LoginFragment : Fragment() {
 
         val signUpBtn = binding.linkToSignUp
         signUpBtn.setOnClickListener(::onLinkToSignUpClicked)
+
         return view
     }
 
@@ -69,7 +77,12 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     Log.d("TAG", "createUserWithEmail:success")
                     Model.instance.getUserByEmail(email)
-                    Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_dishesFragment3)
+
+                    val navOptions: NavOptions = NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build()
+                    val action = LoginFragmentDirections.actionLoginFragmentToDishesFragment3()
+                    Navigation.findNavController(view)?.navigate(action, navOptions).let {
+                        Navigation.findNavController(view)?.graph?.setStartDestination(R.id.dishesFragment)
+                    }
                 } else {
                     Log.w("TAG", "createUserWithEmail:failure", task.exception)
                     Toast.makeText(

@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -24,7 +26,6 @@ import com.squareup.picasso.Picasso
 import royreut.apps.friendish.R
 import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.databinding.FragmentSignUpBinding
-import royreut.apps.friendish.models.Dish
 import royreut.apps.friendish.models.Model
 
 class SignUpFragment : Fragment() {
@@ -43,6 +44,12 @@ class SignUpFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(

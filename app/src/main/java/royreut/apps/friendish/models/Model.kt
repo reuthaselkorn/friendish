@@ -147,6 +147,12 @@ class Model private constructor() {
         }
     }
 
+    fun getAuthorByEmail(email: String, callback: (User) -> Unit) {
+        firebaseModel.getUserByEmail(email) {
+            callback(it)
+        }
+    }
+
     fun getDishById(id: String, callback: (Dish) -> Unit) {
         firebaseModel.getDishById(id) {
             callback(it)

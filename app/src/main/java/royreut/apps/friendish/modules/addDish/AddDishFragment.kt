@@ -124,6 +124,8 @@ class AddDishFragment : Fragment() {
 
                 Picasso.get()
                     .load(dishImageUri)
+                    .centerCrop()
+                    .fit()
                     .into(dishImageView);
             }
         }

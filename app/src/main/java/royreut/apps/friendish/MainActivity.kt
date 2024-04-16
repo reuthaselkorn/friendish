@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,6 +21,8 @@ import royreut.apps.friendish.base.MyApplication
 import royreut.apps.friendish.models.FirebaseModel
 import royreut.apps.friendish.models.Model
 import royreut.apps.friendish.models.User
+import royreut.apps.friendish.modules.auth.LoginFragmentDirections
+import royreut.apps.friendish.modules.userDishes.UserDishesFragmentDirections
 
 class MainActivity : AppCompatActivity() {
     private var navController:NavController? = null
@@ -33,15 +39,29 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.mainNavHost) as? NavHostFragment
         navController = navHostFragment?.navController
 
-        navController?.let { NavigationUI.setupActionBarWithNavController(this, it) }
+        navController?.let {
+            NavigationUI.setupActionBarWithNavController(this, it)
+        }
+
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         navController?.let { NavigationUI.setupWithNavController(bottomNavigationView, it) }
 
+        navController?.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+            if (nd.id == R.id.loginFragment || nd.id == R.id.signUpFragment) {
+                bottomNavigationView.visibility = View.GONE
+            } else {
+                bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
+
+
         val currentUser = auth.currentUser
         if (currentUser != null) {
             currentUser.email?.let { Model.instance.getUserByEmail(it) }
-            navController?.navigate(R.id.action_loginFragment_to_dishesFragment3)
+            val navOptions:NavOptions = NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build()
+            val action = LoginFragmentDirections.actionLoginFragmentToDishesFragment3()
+            navController?.navigate(action, navOptions)
         }
 
     }
@@ -57,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             R.id.logoutBtn -> {
                 auth.signOut()
                 MyApplication.Globals.user = null
-                navController?.navigateUp()
+                navController?.navigate(R.id.loginFragment)
                 true
             }
 

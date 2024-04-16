@@ -61,9 +61,7 @@ class MainActivity : AppCompatActivity() {
             currentUser.email?.let { Model.instance.getUserByEmail(it) }
             val navOptions:NavOptions = NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build()
             val action = LoginFragmentDirections.actionLoginFragmentToDishesFragment3()
-            navController?.navigate(action, navOptions).let {
-                navController?.graph?.setStartDestination(R.id.dishesFragment)
-            }
+            navController?.navigate(action, navOptions)
         }
 
     }

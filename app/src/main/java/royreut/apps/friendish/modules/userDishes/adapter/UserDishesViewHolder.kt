@@ -45,14 +45,17 @@ class UserDishesViewHolder(val itemView: View, val listener: UserDishesRecyclerV
 
         editDishButton?.setOnClickListener {
             //edit dish
-            val action = UserDishesFragmentDirections.actionUserDishesFragmentToEditDishFragment(dishes?.get(adapterPosition)?.id ?: "")
-            Navigation.findNavController(itemView).navigate(action)
+            dish?.let {
+                val action =
+                    UserDishesFragmentDirections.actionUserDishesFragmentToEditDishFragment(it.id)
+                Navigation.findNavController(itemView).navigate(action)
+            }
         }
 
         deleteDishButton?.setOnClickListener {
             //deleteDish
-            (dishes?.get(adapterPosition))?.let {
-                it1 -> Model.instance.deleteDish(it1) {
+            dish?.let {
+                Model.instance.deleteDish(it) {
                     Log.i("TAG", "deleted position: $adapterPosition")
                 }
             }

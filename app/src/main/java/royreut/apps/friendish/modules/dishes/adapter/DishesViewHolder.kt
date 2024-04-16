@@ -17,7 +17,6 @@ class DishesViewHolder(val itemView: View, val listener:DishesRecyclerViewActivi
     fun bind(dish: Dish?) {
         this.dish = dish
         nameTextView?.text = dish?.name
-        recipeTextView?.text = dish?.recipe
 
         Picasso.get().load(dish?.imageUrl)
 //            .placeholder("https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
@@ -25,28 +24,15 @@ class DishesViewHolder(val itemView: View, val listener:DishesRecyclerViewActivi
             .centerCrop()
             .fit()
             .into(dishImage);
-
-        dishCheckbox?.apply {
-            isChecked = dish?.isChecked ?: false
-            tag = adapterPosition
-        }
     }
 
     var nameTextView: TextView? = null
-    var recipeTextView: TextView? = null
-    var dishCheckbox: CheckBox? = null
     var dishImage: ImageView? = null
     var dish: Dish? = null
 
     init {
         nameTextView = itemView.findViewById(R.id.lvDishListName)
-        recipeTextView = itemView.findViewById(R.id.lvDishListRecipe)
-        dishCheckbox = itemView.findViewById(R.id.lvDishListCheckBox)
         dishImage = itemView.findViewById(R.id.imageView)
-
-        dishCheckbox?.setOnClickListener {
-            dishes?.get(adapterPosition)?.isChecked = dishCheckbox?.isChecked ?: false
-        }
 
         itemView.setOnClickListener {
             Log.i("TAG", "position: $adapterPosition")

@@ -14,6 +14,9 @@ class UserDishesRecyclerViewActivity : AppCompatActivity() {
 
     interface OnItemClickListener {
         fun onDishClick(dish: Dish?)
+        fun onDishDelete(dish: Dish?)
+        fun onDishEdit(dish: Dish?)
+
     }
 
     override fun onResume() {

@@ -48,9 +48,26 @@ class UserDishesFragment : Fragment() {
 
         adapter?.listener = object : UserDishesRecyclerViewActivity.OnItemClickListener {
             override fun onDishClick(dish: Dish?) {
-                Log.i("TAG", "dish: ${dish}")
+                Log.i("dish click", "dish: ${dish}")
                 dish?.let {
                     val action = UserDishesFragmentDirections.actionDishesFragmentToShowcaseDishFragment(it.name, it.recipe, it.imageUrl)
+                    Navigation.findNavController(view).navigate(action)
+                }
+            }
+
+            override fun onDishDelete(dish: Dish?) {
+                dish?.let {
+                    Model.instance.deleteDish(it) {
+                        Log.i("delete dish", "dish: ${dish}")
+                    }
+                }
+            }
+
+            override fun onDishEdit(dish: Dish?) {
+                Log.i("edit dish", "dish: ${dish}")
+                dish?.let {
+                    val action =
+                        UserDishesFragmentDirections.actionUserDishesFragmentToEditDishFragment(it.id)
                     Navigation.findNavController(view).navigate(action)
                 }
             }

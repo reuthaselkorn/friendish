@@ -84,7 +84,7 @@ class FirebaseModel {
     fun editDish(dish: Dish, callback: () -> Unit) {
         db.collection(DISHES_COLLECTION_PATH)
             .document(dish.id)
-            .update(Dish.IMAGE_URL_KEY, dish.imageUrl, Dish.RECIPE_KEY, dish.recipe, Dish.NAME_KEY, dish.name)
+            .update(dish.json)
             .addOnSuccessListener { callback() }
             .addOnFailureListener{
                 Log.e("update dish", "blah", it)

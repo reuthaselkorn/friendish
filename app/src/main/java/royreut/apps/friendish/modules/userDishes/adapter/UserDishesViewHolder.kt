@@ -24,7 +24,6 @@ class UserDishesViewHolder(val itemView: View, val listener: UserDishesRecyclerV
         nameTextView?.text = dish?.name
 
         Picasso.get().load(dish?.imageUrl)
-//            .placeholder("https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
             .error(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .fit()

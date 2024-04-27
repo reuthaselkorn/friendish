@@ -44,6 +44,7 @@ class AddDishFragment : Fragment() {
 
     private var _binding: FragmentAddDishBinding? = null
     private val binding get() = _binding!!
+    private val placeholderImageSrc = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png"
 
     private lateinit var viewModel: DishViewModel
 
@@ -96,7 +97,7 @@ class AddDishFragment : Fragment() {
                     saveDish(dish, it)
                 }
             } else {
-                val dish = Dish(id, name, recipe, false, author, "https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
+                val dish = Dish(id, name, recipe, false, author, placeholderImageSrc)
                 saveDish(dish, it)
             }
         }

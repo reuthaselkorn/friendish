@@ -19,8 +19,6 @@ class DishesViewHolder(val itemView: View, val listener:DishesRecyclerViewActivi
         nameTextView?.text = dish?.name
 
         Picasso.get().load(dish?.imageUrl)
-//            .placeholder("https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
-//            .error(R.drawable.error_gfg)
             .centerCrop()
             .fit()
             .into(dishImage);

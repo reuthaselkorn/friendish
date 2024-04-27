@@ -55,8 +55,6 @@ class ShowcaseDishFragment : Fragment() {
             dishAuthorTextView?.text = it.nickname
         }
         Picasso.get().load(dishUrl)
-//            .placeholder("https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg")
-//            .error(R.drawable.error_gfg)
             .centerCrop()
             .fit()
             .into(dishImageView);
